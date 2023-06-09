@@ -26,8 +26,11 @@ class WebBrowser(QMainWindow):
         self.web_view.load(QUrl("https://www.google.com"))
 
     def go_back(self):
-        if self.web_view.canGoBack():
-            self.web_view.back()
+        if hasattr(self.web_view, 'history') and self.web_view.history().canGoBack():
+            self.web_view.history().back()
+        else:
+            QMessageBox.information(self, "Cannot Go Back", "Cannot go back further.")
+
 
     def load_url(self):
         url = self.url_bar.text()
